@@ -1,0 +1,10 @@
+framework module CECManager {
+  umbrella header "CECManager.h"
+
+  export *
+  module * { export * }
+}
+
+module CECManager.Swift {
+    header "CECManager-Swift.h"
+}

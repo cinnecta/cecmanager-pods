@@ -133,10 +133,13 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #endif
 #if defined(__has_feature) && __has_feature(modules)
 @import UIKit;
+@import CoreLocation;
 #endif
 
 #pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
 #pragma clang diagnostic ignored "-Wduplicate-method-arg"
+@class CLLocationManager;
+@class ClientInformation;
 @class NSBundle;
 @class NSCoder;
 
@@ -147,13 +150,18 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 ///   </li>
 /// </ul>
 SWIFT_CLASS("_TtC10CECManager24CELocationDataController")
-@interface CELocationDataController : UIViewController
+@interface CELocationDataController : UIViewController <CLLocationManagerDelegate>
+@property (nonatomic, strong) CLLocationManager * _Nonnull locationManager;
 /// Update current location, setting the <em>longitude</em> and <em>latitude</em> propertys to be used along the application.
 /// \param longitude Current longitude.
 ///
 /// \param latitude Current latitude.
 ///
 - (void)updateLocation:(double)longitude latitude:(double)latitude;
+- (void)startBackgoundUpdate;
+- (void)stopBackgroundUpdate;
+- (void)setupLocationManager;
+- (void)setBackgroundUpdateWithClient:(ClientInformation * _Nonnull)client;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
 @end

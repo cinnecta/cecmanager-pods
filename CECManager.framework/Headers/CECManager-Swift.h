@@ -138,10 +138,23 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
 #pragma clang diagnostic ignored "-Wduplicate-method-arg"
-@class CLLocationManager;
-@class ClientInformation;
-@class NSBundle;
+@class CELocationDataController;
 @class NSCoder;
+@class NSBundle;
+
+SWIFT_CLASS("_TtC10CECManager19CEClientInformation")
+@interface CEClientInformation : UIViewController
+@property (nonatomic, strong) CELocationDataController * _Nullable locationController;
+- (nonnull instancetype)initWithLocationController:(CELocationDataController * _Nonnull)locationController OBJC_DESIGNATED_INITIALIZER;
+- (void)updateLocationWithLongitude:(double)longitude latitude:(double)latitude;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
+- (void)sendInfo;
+- (void)getInfo;
+- (void)registerPhoneNumberWithPhoneNumber:(NSString * _Nonnull)phoneNumber;
+- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
+@end
+
+@class CLLocationManager;
 
 /// This class is supposed to get information about the location:
 /// <ul>
@@ -157,25 +170,13 @@ SWIFT_CLASS("_TtC10CECManager24CELocationDataController")
 ///
 /// \param latitude Current latitude.
 ///
-- (void)updateLocation:(double)longitude latitude:(double)latitude;
+- (void)updateLocationWithLongitude:(double)longitude latitude:(double)latitude;
 - (void)startBackgoundUpdate;
 - (void)stopBackgroundUpdate;
 - (void)setupLocationManager;
-- (void)setBackgroundUpdateWithClient:(ClientInformation * _Nonnull)client;
+- (void)setBackgroundUpdateWithClient:(CEClientInformation * _Nonnull)client;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
-@end
-
-
-SWIFT_CLASS("_TtC10CECManager17ClientInformation")
-@interface ClientInformation : UIViewController
-@property (nonatomic, strong) CELocationDataController * _Nullable locationController;
-- (nonnull instancetype)initWithLocationController:(CELocationDataController * _Nonnull)locationController OBJC_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
-- (void)sendInfo;
-- (void)getInfo;
-- (void)registerPhoneNumberWithPhoneNumber:(NSString * _Nonnull)phoneNumber;
-- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
 
 #pragma clang diagnostic pop

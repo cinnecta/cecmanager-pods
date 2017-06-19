@@ -138,13 +138,19 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
 #pragma clang diagnostic ignored "-Wduplicate-method-arg"
+
+SWIFT_PROTOCOL("_TtP10CECManager16CELocationUpdate_")
+@protocol CELocationUpdate
+- (void)updateLocationWithLongitude:(double)longitude latitude:(double)latitude;
+@end
+
 @class CELocationDataController;
 @class NSCoder;
 @class NSBundle;
 
 /// The <code>CEClientInformation</code> is supposed to listens for changes of application state and process data from client.
 SWIFT_CLASS("_TtC10CECManager19CEClientInformation")
-@interface CEClientInformation : UIViewController
+@interface CEClientInformation : UIViewController <CELocationUpdate>
 /// A controller to process data from location, using GPS while the app is in use.
 @property (nonatomic, strong) CELocationDataController * _Nullable locationController;
 /// The <code>CEClientInformation</code> must initialize with a instance of <code>CELocationDataController</code>.
@@ -188,12 +194,7 @@ SWIFT_CLASS("_TtC10CECManager19CEClientInformation")
 SWIFT_CLASS("_TtC10CECManager24CELocationDataController")
 @interface CELocationDataController : UIViewController <CLLocationManagerDelegate>
 @property (nonatomic, strong) CLLocationManager * _Nonnull locationManager;
-/// Update current location, setting the <em>longitude</em> and <em>latitude</em> propertys to be used along the application.
-/// \param longitude Current longitude.
-///
-/// \param latitude Current latitude.
-///
-- (void)updateLocationWithLongitude:(double)longitude latitude:(double)latitude;
+@property (nonatomic, strong) id <CELocationUpdate> _Null_unspecified asyncObject;
 - (void)startBackgoundUpdate;
 - (void)stopBackgroundUpdate;
 - (void)setupLocationManager;
@@ -201,5 +202,6 @@ SWIFT_CLASS("_TtC10CECManager24CELocationDataController")
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
 @end
+
 
 #pragma clang diagnostic pop

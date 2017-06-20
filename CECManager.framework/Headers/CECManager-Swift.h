@@ -181,6 +181,7 @@ SWIFT_CLASS("_TtC10CECManager19CEClientInformation")
 /// \param phoneNumber The phone of the user.
 ///
 - (void)registerPhoneNumberWithPhoneNumber:(NSString * _Nonnull)phoneNumber;
+- (void)registerIdentifierWithIdentifier:(NSString * _Nonnull)identifier;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
 

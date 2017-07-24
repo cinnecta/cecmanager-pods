@@ -132,44 +132,33 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 # define SWIFT_DEPRECATED_MSG(...) __attribute__((deprecated(__VA_ARGS__)))
 #endif
 #if defined(__has_feature) && __has_feature(modules)
-@import UIKit;
 @import ObjectiveC;
-@import CoreLocation;
 #endif
 
 #pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
 #pragma clang diagnostic ignored "-Wduplicate-method-arg"
-
-SWIFT_PROTOCOL("_TtP10CECManager16CELocationUpdate_")
-@protocol CELocationUpdate
-- (void)updateLocationWithLongitude:(double)longitude latitude:(double)latitude;
-@end
-
-@class CELocationDataController;
-@class NSCoder;
-@class NSBundle;
+@class CLLocationManager;
 
 /// The <code>CEClientInformation</code> is supposed to listens for changes of application state and process data from client.
-SWIFT_CLASS("_TtC10CECManager19CEClientInformation")
-@interface CEClientInformation : UIViewController <CELocationUpdate>
-/// A controller to process data from location, using GPS while the app is in use.
-@property (nonatomic, strong) CELocationDataController * _Nullable locationController;
+SWIFT_CLASS_NAMED("CEClientInformation")
+@interface CEClientInformation : NSObject
+@property (nonatomic, strong) CLLocationManager * _Nullable locationManager;
 /// The <code>CEClientInformation</code> must initialize with a instance of <code>CELocationDataController</code>.
 /// \param locationController The instace of <code>CELocationDataController</code>
 ///
 ///
 /// returns:
 /// A instance of <code>CEClientInfomation</code>
-- (nonnull instancetype)initWithLocationController:(CELocationDataController * _Nonnull)locationController OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithLocationManager:(CLLocationManager * _Nonnull)locationManager OBJC_DESIGNATED_INITIALIZER;
 /// Update current location, setting the <em>longitude</em> and <em>latitude</em> propertys to be used along the application.
 /// \param longitude Current longitude.
 ///
 /// \param latitude Current latitude.
 ///
 - (void)updateLocationWithLongitude:(double)longitude latitude:(double)latitude;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
 /// Send the data from client to server.
 - (void)sendInfo;
+- (void)getBackgroundInfo;
 /// Start to process data from client.
 - (void)getInfo;
 /// Save the phone number in UserDefaults.
@@ -182,27 +171,7 @@ SWIFT_CLASS("_TtC10CECManager19CEClientInformation")
 ///
 - (void)registerPhoneNumberWithPhoneNumber:(NSString * _Nonnull)phoneNumber;
 - (void)registerIdentifierWithIdentifier:(NSString * _Nonnull)identifier;
-- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
-
-@class CLLocationManager;
-
-/// This class is supposed to get information about the location:
-/// <ul>
-///   <li>
-///     Track the and update current location
-///   </li>
-/// </ul>
-SWIFT_CLASS("_TtC10CECManager24CELocationDataController")
-@interface CELocationDataController : NSObject <CLLocationManagerDelegate>
-@property (nonatomic, strong) CLLocationManager * _Nonnull locationManager;
-@property (nonatomic, strong) id <CELocationUpdate> _Null_unspecified asyncObject;
-- (void)startBackgoundUpdate;
-- (void)stopBackgroundUpdate;
-- (void)setupLocationManager;
-- (void)setBackgroundUpdateWithClient:(CEClientInformation * _Nonnull)client;
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
 
 #pragma clang diagnostic pop
